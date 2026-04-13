@@ -19,7 +19,7 @@
     }
 
     body {
-      min-height: 300vh;
+      min-height: 220vh;
       color: white;
     }
 
@@ -28,8 +28,9 @@
       top: 0;
       width: 100%;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       padding-top: 40px;
       z-index: 1000;
       pointer-events: none;
@@ -43,28 +44,23 @@
       will-change: transform, width;
     }
 
-    .spacer {
-      height: 110vh;
-    }
-
-    .text-section {
-      min-height: 100vh;
+    .hero-text-wrap {
+      width: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 0 24px;
+      padding: 28px 24px 0;
     }
 
     .fade-text {
       max-width: 900px;
       text-align: center;
-      font-size: clamp(1.4rem, 2.4vw, 2.4rem);
+      font-size: clamp(1.2rem, 2.1vw, 2.1rem);
       line-height: 1.7;
       font-weight: 300;
       letter-spacing: 0.03em;
       color: #fff;
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(24px);
       transition: opacity 1.2s ease, transform 1.2s ease;
       will-change: opacity, transform;
     }
@@ -73,21 +69,25 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    .spacer {
+      height: 140vh;
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
     <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
+
+    <div class="hero-text-wrap">
+      <div class="fade-text" id="fadeText">
+        Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
+      </div>
+    </div>
   </div>
 
   <div class="spacer"></div>
-
-  <section class="text-section">
-    <div class="fade-text" id="fadeText">
-      Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
-    </div>
-  </section>
 
   <script>
     const logo = document.getElementById('logo');
@@ -107,21 +107,11 @@
 
       logo.style.width = currentSize + 'px';
       logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
-    });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          fadeText.classList.add('visible');
-        } else {
-          fadeText.classList.remove('visible');
-        }
-      });
-    }, {
-      threshold: 0.35
+      const textProgress = Math.min(scrollY / 180, 1);
+      fadeText.style.opacity = textProgress;
+      fadeText.style.transform = `translateY(${24 - (24 * textProgress)}px)`;
     });
-
-    observer.observe(fadeText);
   </script>
 
 </body>
