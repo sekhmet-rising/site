@@ -48,14 +48,15 @@
       max-width: 80vw;
       transform-origin: center center;
       will-change: transform, width;
+      transition: transform 0.25s ease-out, width 0.25s ease-out;
     }
 
     .hero-text-wrap {
       width: 100%;
       display: flex;
       justify-content: center;
+      margin-top: 260px;
       padding: 0 24px;
-      will-change: transform;
     }
 
     .fade-text {
@@ -66,8 +67,16 @@
       font-weight: 300;
       letter-spacing: 0.03em;
       color: #fff;
+
       opacity: 0;
-      will-change: opacity, transform;
+      transform: translateY(40px);
+
+      transition: opacity 3s ease, transform 3s ease;
+    }
+
+    .fade-text.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .spacer {
@@ -82,7 +91,7 @@
       <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
     </div>
 
-    <div class="hero-text-wrap" id="textWrap">
+    <div class="hero-text-wrap">
       <div class="fade-text" id="fadeText">
         Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
       </div>
@@ -94,46 +103,32 @@
   <script>
     const logo = document.getElementById('logo');
     const fadeText = document.getElementById('fadeText');
-    const textWrap = document.getElementById('textWrap');
 
-    function animateOnScroll() {
+    let hasTriggeredFade = false;
+
+    window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
 
-      const animationLimit = 420;
-      const progress = Math.min(scrollY / animationLimit, 1);
-
-      const eased = 1 - Math.pow(1 - progress, 3);
+      // Logo animation (same as before)
+      const shrinkLimit = 300;
+      const progress = Math.min(scrollY / shrinkLimit, 1);
 
       const startSize = 520;
       const endSize = 260;
-      const currentSize = startSize - ((startSize - endSize) * eased);
+      const currentSize = startSize - ((startSize - endSize) * progress);
 
-      const rotation = 360 * eased;
-      const logoMoveUp = 12 * eased;
+      const rotation = 360 * progress;
+      const moveUp = progress * 10;
 
       logo.style.width = currentSize + 'px';
-      logo.style.transform = `translateY(-${logoMoveUp}px) rotate(${rotation}deg)`;
+      logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
 
-      const startTextOffset = 95;
-      const endTextOffset = 285;
-      const currentTextOffset = startTextOffset + ((endTextOffset - startTextOffset) * eased);
-      textWrap.style.transform = `translateY(${currentTextOffset}px)`;
-
-      const fadeStart = 0.18;
-      const fadeEnd = 0.92;
-      let fadeProgress = (eased - fadeStart) / (fadeEnd - fadeStart);
-      fadeProgress = Math.max(0, Math.min(fadeProgress, 1));
-
-      fadeText.style.opacity = fadeProgress;
-
-      const textRiseStart = 36;
-      const textRiseEnd = 0;
-      const currentTextRise = textRiseStart - ((textRiseStart - textRiseEnd) * fadeProgress);
-      fadeText.style.transform = `translateY(${currentTextRise}px)`;
-    }
-
-    window.addEventListener('scroll', animateOnScroll);
-    window.addEventListener('load', animateOnScroll);
+      // Trigger fade ONLY ON FIRST SCROLL
+      if (!hasTriggeredFade && scrollY > 10) {
+        hasTriggeredFade = true;
+        fadeText.classList.add('visible');
+      }
+    });
   </script>
 
 </body>
