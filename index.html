@@ -2,63 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sekhmet Rising</title>
-
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: black;
-      height: 200vh;
-      overflow-x: hidden;
+      padding: 0;
     }
 
-    header {
-      position: fixed;
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background: #000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 300vh;
+      color: white;
+    }
+
+    .header {
+      position: sticky;
       top: 0;
       width: 100%;
-      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .logo {
+      width: 520px;
+      max-width: 80vw;
+      transition:
+        transform 0.25s ease-out,
+        width 0.25s ease-out,
+        opacity 0.25s ease-out;
+      transform-origin: center center;
+      will-change: transform, width, opacity;
+    }
+
+    .content {
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: padding 0.8s ease, background 0.8s ease;
-      padding: 80px 0;
-      z-index: 1000;
+      min-height: 200vh;
+      padding: 0 24px;
     }
 
-    header img {
-      height: 360px;
-      transition: height 0.8s ease, transform 0.8s ease;
-      transform: rotate(0deg);
-      transform-origin: center center;
-      display: block;
+    .fade-text {
+      max-width: 900px;
+      text-align: center;
+      font-size: clamp(1.4rem, 2.4vw, 2.4rem);
+      line-height: 1.7;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      color: rgba(255, 255, 255, 1);
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s ease;
+      will-change: opacity, transform;
     }
 
-    header.shrink {
-      padding: 20px 0;
-      background: rgba(0, 0, 0, 0.95);
-    }
-
-    header.shrink img {
-      height: 140px;
-      transform: rotate(360deg);
+    .fade-text.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
-  <header id="header">
-    <img src="SEkRise2.jpg" alt="Logo">
-  </header>
+  <div class="header">
+    <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
+  </div>
+
+  <div class="content">
+    <div class="fade-text" id="fadeText">
+      Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
+    </div>
+  </div>
 
   <script>
-    const header = document.getElementById("header");
+    const logo = document.getElementById('logo');
+    const fadeText = document.getElementById('fadeText');
 
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 50) {
-        header.classList.add("shrink");
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const shrinkLimit = 300;
+      const progress = Math.min(scrollY / shrinkLimit, 1);
+
+      const startSize = 520;
+      const endSize = 260;
+      const currentSize = startSize - ((startSize - endSize) * progress);
+
+      const rotation = 360 * progress;
+      const moveUp = progress * 10;
+
+      logo.style.width = currentSize + 'px';
+      logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
+
+      if (scrollY > 120) {
+        fadeText.classList.add('visible');
       } else {
-        header.classList.remove("shrink");
+        fadeText.classList.remove('visible');
       }
     });
   </script>
