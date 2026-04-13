@@ -12,6 +12,13 @@
       padding: 0;
     }
 
+    :root {
+      --header-height: 150px;
+      --logo-large: 520px;
+      --logo-small: 220px;
+      --section-gap: 22vh;
+    }
+
     html, body {
       width: 100%;
       overflow-x: hidden;
@@ -24,25 +31,30 @@
       min-height: 100vh;
     }
 
-    .logo-shell {
+    /* TOP BLACK HEADER BAR */
+    .top-header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 0;
+      height: var(--header-height);
+      background: #000;
       z-index: 1000;
       pointer-events: none;
+      overflow: hidden;
     }
 
     .logo {
       position: fixed;
       left: 50%;
-      top: 36px;
-      width: 520px;
+      top: 20px;
+      width: var(--logo-large);
       max-width: 82vw;
-      transform: translateX(-50%) translateY(0) rotate(0deg);
+      transform: translateX(-50%) rotate(0deg);
       transform-origin: center center;
       will-change: transform, width, top;
+      z-index: 1001;
+      pointer-events: none;
     }
 
     .page {
@@ -51,15 +63,27 @@
     }
 
     .hero-spacer {
-      height: 105vh;
+      height: 82vh;
     }
 
-    .text-section {
-      min-height: 95vh;
+    .text-section,
+    .form-section {
+      min-height: 78vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 24px;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .text-section {
+      padding-top: 0;
+      padding-bottom: var(--section-gap);
+    }
+
+    .form-section {
+      padding-top: 0;
+      padding-bottom: 14vh;
     }
 
     .hero-text {
@@ -71,7 +95,7 @@
       font-weight: 300;
       color: rgba(255,255,255,0.96);
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(24px);
       transition: opacity 3s ease, transform 3s ease;
       will-change: opacity, transform;
     }
@@ -81,19 +105,11 @@
       transform: translateY(0);
     }
 
-    .form-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px 120px;
-    }
-
     .form-wrap {
       width: 100%;
       max-width: 720px;
       opacity: 0;
-      transform: translateY(50px);
+      transform: translateY(36px);
       transition: opacity 1.4s ease, transform 1.4s ease;
       will-change: opacity, transform;
     }
@@ -111,35 +127,43 @@
     }
 
     .bottom-space {
-      height: 25vh;
+      height: 18vh;
     }
 
     @media (max-width: 767px) {
+      :root {
+        --header-height: 118px;
+        --logo-large: 470px;
+        --logo-small: 190px;
+        --section-gap: 18vh;
+      }
+
       .logo {
-        top: 24px;
+        top: 14px;
         max-width: 86vw;
       }
 
       .hero-spacer {
-        height: 100vh;
+        height: 68vh;
       }
 
-      .text-section {
-        min-height: 90vh;
-        padding: 0 20px;
+      .text-section,
+      .form-section {
+        min-height: 72vh;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       .form-section {
-        padding: 20px 16px 100px;
+        padding-bottom: 12vh;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="logo-shell">
-    <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
-  </div>
+  <div class="top-header"></div>
+  <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
 
   <main class="page">
     <div class="hero-spacer"></div>
@@ -176,22 +200,30 @@
     let textStarted = false;
     let ticking = false;
 
+    function getVar(name) {
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
+    }
+
     function updateScene() {
       const scrollY = window.scrollY || window.pageYOffset;
+
+      const largeLogo = getVar('--logo-large');
+      const smallLogo = getVar('--logo-small');
+      const headerHeight = getVar('--header-height');
 
       const animationDistance = 320;
       const progress = Math.min(scrollY / animationDistance, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      const startWidth = Math.min(window.innerWidth * 0.82, 520);
-      const endWidth = Math.min(window.innerWidth * 0.42, 260);
-      const currentWidth = startWidth - ((startWidth - endWidth) * eased);
-
+      const currentWidth = largeLogo - ((largeLogo - smallLogo) * eased);
+      const startTop = window.innerWidth <= 767 ? 14 : 20;
+      const endTop = (headerHeight - smallLogo) / 2;
+      const currentTop = startTop + ((endTop - startTop) * eased);
       const rotation = 360 * eased;
-      const lift = 12 * eased;
 
       logo.style.width = currentWidth + 'px';
-      logo.style.transform = `translateX(-50%) translateY(-${lift}px) rotate(${rotation}deg)`;
+      logo.style.top = currentTop + 'px';
+      logo.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
 
       if (!textStarted && scrollY > 8) {
         textStarted = true;
@@ -215,8 +247,8 @@
         }
       });
     }, {
-      threshold: 0.2,
-      rootMargin: "0px 0px -8% 0px"
+      threshold: 0.18,
+      rootMargin: "0px 0px -10% 0px"
     });
 
     formObserver.observe(formWrap);
