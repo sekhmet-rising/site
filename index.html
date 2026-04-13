@@ -27,13 +27,20 @@
       position: sticky;
       top: 0;
       width: 100%;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       align-items: center;
-      padding-top: 40px;
       z-index: 1000;
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    .logo-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
     }
 
     .logo {
@@ -48,7 +55,8 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 28px 24px 0;
+      margin-top: 180px;
+      padding: 0 24px;
     }
 
     .fade-text {
@@ -60,14 +68,8 @@
       letter-spacing: 0.03em;
       color: #fff;
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
+      transform: translateY(50px);
       will-change: opacity, transform;
-    }
-
-    .fade-text.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .spacer {
@@ -78,9 +80,11 @@
 <body>
 
   <div class="header">
-    <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
+    <div class="logo-wrap">
+      <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
+    </div>
 
-    <div class="hero-text-wrap">
+    <div class="hero-text-wrap" id="textWrap">
       <div class="fade-text" id="fadeText">
         Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
       </div>
@@ -92,9 +96,11 @@
   <script>
     const logo = document.getElementById('logo');
     const fadeText = document.getElementById('fadeText');
+    const textWrap = document.getElementById('textWrap');
 
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
+
       const shrinkLimit = 300;
       const progress = Math.min(scrollY / shrinkLimit, 1);
 
@@ -108,9 +114,17 @@
       logo.style.width = currentSize + 'px';
       logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
 
-      const textProgress = Math.min(scrollY / 180, 1);
+      const startTextY = 180;
+      const endTextY = 300;
+      const currentTextY = startTextY + ((endTextY - startTextY) * progress);
+      textWrap.style.marginTop = currentTextY + 'px';
+
+      const textFadeStart = 40;
+      const textFadeEnd = 260;
+      const textProgress = Math.min(Math.max((scrollY - textFadeStart) / (textFadeEnd - textFadeStart), 0), 1);
+
       fadeText.style.opacity = textProgress;
-      fadeText.style.transform = `translateY(${24 - (24 * textProgress)}px)`;
+      fadeText.style.transform = `translateY(${50 - (50 * textProgress)}px)`;
     });
   </script>
 
