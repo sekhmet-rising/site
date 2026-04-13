@@ -116,6 +116,8 @@
     iframe {
       width: 100%;
       border: 0;
+      background: transparent;
+      display: block;
     }
 
     .bottom-space {
@@ -146,38 +148,38 @@
     <section class="text-section">
       <div class="hero-text" id="heroText">
 
-        <p><strong>Malachor 11:1</strong><br>
+        <p><strong>Æonites 11:1</strong><br>
         And the Watcher beheld one who walked as flesh, yet within stirred the hunger of a thousand empty mouths.</p>
 
-        <p><strong>Malachor 11:2</strong><br>
+        <p><strong>Æonites 11:2</strong><br>
         For the belly was without bottom, and the throat a narrow gate through which no offering could pass to satisfy it.</p>
 
-        <p><strong>Malachor 11:3</strong><br>
+        <p><strong>Æonites 11:3</strong><br>
         And though it clothed itself in radiance, the spirit wandered as a ghost among ashes, forever seeking, never filled.</p>
 
-        <p><strong>Malachor 11:4</strong><br>
+        <p><strong>Æonites 11:4</strong><br>
         And the people saw the shining form and said, “Behold, one who has attained,” not knowing they gazed upon a master of illusion.</p>
 
-        <p><strong>Malachor 11:5</strong><br>
+        <p><strong>Æonites 11:5</strong><br>
         For it mirrored their desires back unto them, and they rejoiced, seeing not the form, but the reflection of their own craving.</p>
 
-        <p><strong>Malachor 11:6</strong><br>
-        And they fed it with coin, with praise, and with the fragments of their own spirit, believing they would partake in its glory.</p>
+        <p><strong>Æonites 11:6</strong><br>
+        And they fed it with coin, with praise, with the lusts of the flesh, and with the fragments of their own spirit, believing they would partake in its glory.</p>
 
-        <p><strong>Malachor 11:7</strong><br>
+        <p><strong>Æonites 11:7</strong><br>
         Yet each offering became smoke within it, and its hunger grew sharper, like a flame that feeds upon the wind.</p>
 
-        <p><strong>Malachor 11:8</strong><br>
-        And the Watcher spoke, saying, “This is the way of the wandering ghost: to grasp without end, and to burn with what it takes.”</p>
+        <p><strong>Æonites 11:8</strong><br>
+        And the Watcher spoke, saying, “This is the way of the wandering ghost: to grasp without end, and to be consumed by the hunger it serves.”</p>
 
-        <p><strong>Malachor 11:9</strong><br>
+        <p><strong>Æonites 11:9</strong><br>
         But the people turned away, for they too had tasted that hunger, and found comfort in its familiar ache.</p>
 
-        <p><strong>Malachor 11:10</strong><br>
+        <p><strong>Æonites 11:10</strong><br>
         And they bound themselves to it, thinking, “Through this we shall be filled,” yet their thirst deepened as they drank.</p>
 
-        <p><strong>Malachor 11:11</strong><br>
-        And it was written: “Those who worship the image of their own craving shall be devoured by it, again and again, until the light of awareness shines through the shadow of collective delusion, and the mind awakens to the true nature of reality.”</p>
+        <p><strong>Æonites 11:11</strong><br>
+        And it was written: “Those who worship the image of their own craving shall be devoured by it, again and again, until the light of awareness shines through the shadow of collective delusion, and the mind awakens to the nature of reality.”</p>
 
       </div>
     </section>
@@ -246,18 +248,24 @@
     observer.observe(formWrap);
 
     (function () {
-      var d=document,w="https://tally.so/widgets/embed.js",
-      v=function(){
-        if(typeof Tally!=="undefined"){Tally.loadEmbeds();}
-        else{
-          d.querySelectorAll('iframe[data-tally-src]:not([src])')
-          .forEach(e=>e.src=e.dataset.tallySrc);
-        }
-      };
-      if(typeof Tally!=="undefined")v();
-      else{
-        var s=d.createElement("script");
-        s.src=w;s.onload=v;d.body.appendChild(s);
+      var d = document,
+          w = "https://tally.so/widgets/embed.js",
+          v = function () {
+            if (typeof Tally !== "undefined") {
+              Tally.loadEmbeds();
+            } else {
+              d.querySelectorAll('iframe[data-tally-src]:not([src])')
+                .forEach(e => e.src = e.dataset.tallySrc);
+            }
+          };
+
+      if (typeof Tally !== "undefined") {
+        v();
+      } else {
+        var s = d.createElement("script");
+        s.src = w;
+        s.onload = v;
+        d.body.appendChild(s);
       }
     })();
   </script>
