@@ -38,19 +38,20 @@
     .logo {
       width: 520px;
       max-width: 80vw;
-      transition:
-        transform 0.25s ease-out,
-        width 0.25s ease-out,
-        opacity 0.25s ease-out;
+      transition: transform 0.25s ease-out, width 0.25s ease-out;
       transform-origin: center center;
-      will-change: transform, width, opacity;
+      will-change: transform, width;
     }
 
-    .content {
+    .spacer {
+      height: 110vh;
+    }
+
+    .text-section {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 200vh;
       padding: 0 24px;
     }
 
@@ -61,12 +62,10 @@
       line-height: 1.7;
       font-weight: 300;
       letter-spacing: 0.03em;
-      color: rgba(255, 255, 255, 1);
+      color: #fff;
       opacity: 0;
-      transform: translateY(30px);
-      transition:
-        opacity 0.9s ease,
-        transform 0.9s ease;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
       will-change: opacity, transform;
     }
 
@@ -82,11 +81,13 @@
     <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
   </div>
 
-  <div class="content">
+  <div class="spacer"></div>
+
+  <section class="text-section">
     <div class="fade-text" id="fadeText">
       Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
     </div>
-  </div>
+  </section>
 
   <script>
     const logo = document.getElementById('logo');
@@ -106,13 +107,21 @@
 
       logo.style.width = currentSize + 'px';
       logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
-
-      if (scrollY > 120) {
-        fadeText.classList.add('visible');
-      } else {
-        fadeText.classList.remove('visible');
-      }
     });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fadeText.classList.add('visible');
+        } else {
+          fadeText.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.35
+    });
+
+    observer.observe(fadeText);
   </script>
 
 </body>
