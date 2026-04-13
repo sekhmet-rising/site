@@ -9,7 +9,7 @@
     body {
       margin: 0;
       background: black;
-      height: 200vh; /* gives scroll space so effect works */
+      height: 200vh; /* allows scrolling */
     }
 
     /* 🔥 HEADER */
@@ -22,30 +22,31 @@
       justify-content: center;
       align-items: center;
       transition: all 0.4s ease;
-      padding: 60px 0;
+      padding: 80px 0;
       z-index: 1000;
     }
 
+    /* 🔥 BIG LOGO */
     header img {
-      height: 180px;
+      height: 360px;
       transition: all 0.4s ease;
     }
 
     /* 🔻 SHRINK STATE */
     header.shrink {
-      padding: 10px 0;
+      padding: 20px 0;
       background: rgba(0,0,0,0.95);
     }
 
     header.shrink img {
-      height: 70px;
+      height: 140px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 🔥 LOGO HEADER ONLY -->
+  <!-- 🔥 LOGO -->
   <header id="header">
     <img src="SEkRise2.jpg" alt="Logo">
   </header>
