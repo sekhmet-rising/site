@@ -19,7 +19,7 @@
       --hero-gap: 82vh;
       --text-form-gap: 10.5vh;
       --logo-start-top: 34px;
-      --logo-top-buffer: 18px;
+      --logo-top-buffer: 20px;
     }
 
     html, body {
@@ -28,10 +28,6 @@
       background: #000;
       color: #fff;
       font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
     }
 
     .top-header {
@@ -53,7 +49,6 @@
       max-width: 82vw;
       transform: translateX(-50%) rotate(0deg);
       transform-origin: center center;
-      will-change: transform, width, top;
       z-index: 1001;
       pointer-events: none;
     }
@@ -94,12 +89,15 @@
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 3s ease, transform 3s ease;
-      will-change: opacity, transform;
     }
 
     .hero-text.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .hero-text p {
+      margin-bottom: 18px;
     }
 
     .form-wrap {
@@ -108,7 +106,6 @@
       opacity: 0;
       transform: translateY(36px);
       transition: opacity 1.4s ease, transform 1.4s ease;
-      will-change: opacity, transform;
     }
 
     .form-wrap.visible {
@@ -117,10 +114,8 @@
     }
 
     iframe {
-      display: block;
       width: 100%;
       border: 0;
-      background: transparent;
     }
 
     .bottom-space {
@@ -129,30 +124,13 @@
 
     @media (max-width: 767px) {
       :root {
-        --header-height: 168px;
+        --header-height: 170px;
         --logo-large: 470px;
         --logo-small: 190px;
         --hero-gap: 68vh;
         --text-form-gap: 7.5vh;
-        --logo-start-top: 24px;
-        --logo-top-buffer: 14px;
-      }
-
-      .logo {
-        max-width: 86vw;
-      }
-
-      .text-section {
-        min-height: 68vh;
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .form-section {
-        min-height: 52vh;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 10vh;
+        --logo-start-top: 26px;
+        --logo-top-buffer: 16px;
       }
     }
   </style>
@@ -160,14 +138,47 @@
 <body>
 
   <div class="top-header"></div>
-  <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
+  <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
 
   <main class="page">
     <div class="hero-spacer"></div>
 
     <section class="text-section">
       <div class="hero-text" id="heroText">
-        Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
+
+        <p><strong>Malachor 11:1</strong><br>
+        And the Watcher beheld one who walked as flesh, yet within stirred the hunger of a thousand empty mouths.</p>
+
+        <p><strong>Malachor 11:2</strong><br>
+        For the belly was without bottom, and the throat a narrow gate through which no offering could pass to satisfy it.</p>
+
+        <p><strong>Malachor 11:3</strong><br>
+        And though it clothed itself in radiance, the spirit wandered as a ghost among ashes, forever seeking, never filled.</p>
+
+        <p><strong>Malachor 11:4</strong><br>
+        And the people saw the shining form and said, “Behold, one who has attained,” not knowing they gazed upon a master of illusion.</p>
+
+        <p><strong>Malachor 11:5</strong><br>
+        For it mirrored their desires back unto them, and they rejoiced, seeing not the form, but the reflection of their own craving.</p>
+
+        <p><strong>Malachor 11:6</strong><br>
+        And they fed it with coin, with praise, and with the fragments of their own spirit, believing they would partake in its glory.</p>
+
+        <p><strong>Malachor 11:7</strong><br>
+        Yet each offering became smoke within it, and its hunger grew sharper, like a flame that feeds upon the wind.</p>
+
+        <p><strong>Malachor 11:8</strong><br>
+        And the Watcher spoke, saying, “This is the way of the wandering ghost: to grasp without end, and to burn with what it takes.”</p>
+
+        <p><strong>Malachor 11:9</strong><br>
+        But the people turned away, for they too had tasted that hunger, and found comfort in its familiar ache.</p>
+
+        <p><strong>Malachor 11:10</strong><br>
+        And they bound themselves to it, thinking, “Through this we shall be filled,” yet their thirst deepened as they drank.</p>
+
+        <p><strong>Malachor 11:11</strong><br>
+        And it was written: “Those who worship the image of their own craving shall be devoured by it, again and again, until they heal from their collective psychosis and awaken to the true nature of reality.”</p>
+
       </div>
     </section>
 
@@ -176,11 +187,7 @@
         <iframe
           data-tally-src="https://tally.so/embed/J9JgDd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
           loading="lazy"
-          width="100%"
           height="274"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
           title="Sekhmet">
         </iframe>
       </div>
@@ -195,90 +202,62 @@
     const formWrap = document.getElementById('formWrap');
 
     let textStarted = false;
-    let ticking = false;
 
     function getVar(name) {
       return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
     }
 
     function updateScene() {
-      const scrollY = window.scrollY || window.pageYOffset;
+      const scrollY = window.scrollY;
 
       const largeLogo = getVar('--logo-large');
       const smallLogo = getVar('--logo-small');
       const headerHeight = getVar('--header-height');
       const startTop = getVar('--logo-start-top');
-      const topBuffer = getVar('--logo-top-buffer');
+      const buffer = getVar('--logo-top-buffer');
 
-      const animationDistance = 320;
-      const progress = Math.min(scrollY / animationDistance, 1);
+      const progress = Math.min(scrollY / 320, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      const currentWidth = largeLogo - ((largeLogo - smallLogo) * eased);
-
+      const width = largeLogo - ((largeLogo - smallLogo) * eased);
       const centeredTop = (headerHeight - smallLogo) / 2;
-      const endTop = Math.max(topBuffer, centeredTop);
+      const endTop = Math.max(buffer, centeredTop);
+      const top = startTop + ((endTop - startTop) * eased);
 
-      const currentTop = startTop + ((endTop - startTop) * eased);
-      const rotation = 360 * eased;
+      logo.style.width = width + 'px';
+      logo.style.top = top + 'px';
+      logo.style.transform = `translateX(-50%) rotate(${360 * eased}deg)`;
 
-      logo.style.width = currentWidth + 'px';
-      logo.style.top = currentTop + 'px';
-      logo.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
-
-      if (!textStarted && scrollY > 8) {
+      if (!textStarted && scrollY > 10) {
         textStarted = true;
         heroText.classList.add('visible');
       }
-
-      ticking = false;
     }
 
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(updateScene);
-        ticking = true;
-      }
-    }
-
-    const formObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          formWrap.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.18,
-      rootMargin: "0px 0px -10% 0px"
-    });
-
-    formObserver.observe(formWrap);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateScene);
+    window.addEventListener('scroll', () => requestAnimationFrame(updateScene));
     window.addEventListener('load', updateScene);
 
-    (function () {
-      var d = document,
-          w = "https://tally.so/widgets/embed.js",
-          v = function () {
-            if (typeof Tally !== "undefined") {
-              Tally.loadEmbeds();
-            } else {
-              d.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(function (e) {
-                e.src = e.dataset.tallySrc;
-              });
-            }
-          };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) formWrap.classList.add('visible');
+      });
+    });
 
-      if (typeof Tally !== "undefined") {
-        v();
-      } else if (d.querySelector('script[src="' + w + '"]') == null) {
-        var s = d.createElement("script");
-        s.src = w;
-        s.onload = v;
-        s.onerror = v;
-        d.body.appendChild(s);
+    observer.observe(formWrap);
+
+    (function () {
+      var d=document,w="https://tally.so/widgets/embed.js",
+      v=function(){
+        if(typeof Tally!=="undefined"){Tally.loadEmbeds();}
+        else{
+          d.querySelectorAll('iframe[data-tally-src]:not([src])')
+          .forEach(e=>e.src=e.dataset.tallySrc);
+        }
+      };
+      if(typeof Tally!=="undefined")v();
+      else{
+        var s=d.createElement("script");
+        s.src=w;s.onload=v;d.body.appendChild(s);
       }
     })();
   </script>
