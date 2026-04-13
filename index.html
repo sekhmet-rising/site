@@ -9,10 +9,10 @@
     body {
       margin: 0;
       background: black;
-      height: 200vh; /* allows scrolling */
+      height: 200vh;
+      overflow-x: hidden;
     }
 
-    /* 🔥 HEADER */
     header {
       position: fixed;
       top: 0;
@@ -21,32 +21,32 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: all 0.4s ease;
+      transition: padding 0.8s ease, background 0.8s ease;
       padding: 80px 0;
       z-index: 1000;
     }
 
-    /* 🔥 BIG LOGO */
     header img {
       height: 360px;
-      transition: all 0.4s ease;
+      transition: height 0.8s ease, transform 0.8s ease;
+      transform: rotate(0deg);
+      transform-origin: center center;
+      display: block;
     }
 
-    /* 🔻 SHRINK STATE */
     header.shrink {
       padding: 20px 0;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0, 0, 0, 0.95);
     }
 
     header.shrink img {
       height: 140px;
+      transform: rotate(360deg);
     }
   </style>
 </head>
-
 <body>
 
-  <!-- 🔥 LOGO -->
   <header id="header">
     <img src="SEkRise2.jpg" alt="Logo">
   </header>
@@ -54,7 +54,7 @@
   <script>
     const header = document.getElementById("header");
 
-    window.addEventListener("scroll", function() {
+    window.addEventListener("scroll", function () {
       if (window.scrollY > 50) {
         header.classList.add("shrink");
       } else {
