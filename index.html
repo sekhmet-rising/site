@@ -46,7 +46,6 @@
     .logo {
       width: 520px;
       max-width: 80vw;
-      transition: transform 0.25s ease-out, width 0.25s ease-out;
       transform-origin: center center;
       will-change: transform, width;
     }
@@ -55,8 +54,8 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-top: 180px;
       padding: 0 24px;
+      will-change: transform;
     }
 
     .fade-text {
@@ -68,7 +67,6 @@
       letter-spacing: 0.03em;
       color: #fff;
       opacity: 0;
-      transform: translateY(50px);
       will-change: opacity, transform;
     }
 
@@ -98,34 +96,44 @@
     const fadeText = document.getElementById('fadeText');
     const textWrap = document.getElementById('textWrap');
 
-    window.addEventListener('scroll', () => {
+    function animateOnScroll() {
       const scrollY = window.scrollY;
 
-      const shrinkLimit = 300;
-      const progress = Math.min(scrollY / shrinkLimit, 1);
+      const animationLimit = 420;
+      const progress = Math.min(scrollY / animationLimit, 1);
+
+      const eased = 1 - Math.pow(1 - progress, 3);
 
       const startSize = 520;
       const endSize = 260;
-      const currentSize = startSize - ((startSize - endSize) * progress);
+      const currentSize = startSize - ((startSize - endSize) * eased);
 
-      const rotation = 360 * progress;
-      const moveUp = progress * 10;
+      const rotation = 360 * eased;
+      const logoMoveUp = 12 * eased;
 
       logo.style.width = currentSize + 'px';
-      logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
+      logo.style.transform = `translateY(-${logoMoveUp}px) rotate(${rotation}deg)`;
 
-      const startTextY = 180;
-      const endTextY = 300;
-      const currentTextY = startTextY + ((endTextY - startTextY) * progress);
-      textWrap.style.marginTop = currentTextY + 'px';
+      const startTextOffset = 95;
+      const endTextOffset = 285;
+      const currentTextOffset = startTextOffset + ((endTextOffset - startTextOffset) * eased);
+      textWrap.style.transform = `translateY(${currentTextOffset}px)`;
 
-      const textFadeStart = 40;
-      const textFadeEnd = 260;
-      const textProgress = Math.min(Math.max((scrollY - textFadeStart) / (textFadeEnd - textFadeStart), 0), 1);
+      const fadeStart = 0.18;
+      const fadeEnd = 0.92;
+      let fadeProgress = (eased - fadeStart) / (fadeEnd - fadeStart);
+      fadeProgress = Math.max(0, Math.min(fadeProgress, 1));
 
-      fadeText.style.opacity = textProgress;
-      fadeText.style.transform = `translateY(${50 - (50 * textProgress)}px)`;
-    });
+      fadeText.style.opacity = fadeProgress;
+
+      const textRiseStart = 36;
+      const textRiseEnd = 0;
+      const currentTextRise = textRiseStart - ((textRiseStart - textRiseEnd) * fadeProgress);
+      fadeText.style.transform = `translateY(${currentTextRise}px)`;
+    }
+
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
   </script>
 
 </body>
