@@ -96,8 +96,9 @@
       transform: translateY(0);
     }
 
+    /* 🔥 INCREASED VERSE SPACING */
     .hero-text p {
-      margin-bottom: 18px;
+      margin-bottom: 32px;
     }
 
     .form-wrap {
@@ -133,6 +134,11 @@
         --text-form-gap: 7.5vh;
         --logo-start-top: 26px;
         --logo-top-buffer: 16px;
+      }
+
+      /* Slightly tighter on mobile but still airy */
+      .hero-text p {
+        margin-bottom: 26px;
       }
     }
   </style>
@@ -248,24 +254,18 @@
     observer.observe(formWrap);
 
     (function () {
-      var d = document,
-          w = "https://tally.so/widgets/embed.js",
-          v = function () {
-            if (typeof Tally !== "undefined") {
-              Tally.loadEmbeds();
-            } else {
-              d.querySelectorAll('iframe[data-tally-src]:not([src])')
-                .forEach(e => e.src = e.dataset.tallySrc);
-            }
-          };
-
-      if (typeof Tally !== "undefined") {
-        v();
-      } else {
-        var s = d.createElement("script");
-        s.src = w;
-        s.onload = v;
-        d.body.appendChild(s);
+      var d=document,w="https://tally.so/widgets/embed.js",
+      v=function(){
+        if(typeof Tally!=="undefined"){Tally.loadEmbeds();}
+        else{
+          d.querySelectorAll('iframe[data-tally-src]:not([src])')
+          .forEach(e=>e.src=e.dataset.tallySrc);
+        }
+      };
+      if(typeof Tally!=="undefined")v();
+      else{
+        var s=d.createElement("script");
+        s.src=w;s.onload=v;d.body.appendChild(s);
       }
     })();
   </script>
