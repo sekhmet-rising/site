@@ -13,11 +13,13 @@
     }
 
     :root {
-      --header-height: 190px;
+      --header-height: 210px;
       --logo-large: 520px;
       --logo-small: 220px;
       --hero-gap: 82vh;
-      --text-form-gap: 15vh;
+      --text-form-gap: 10.5vh;
+      --logo-start-top: 34px;
+      --logo-top-buffer: 18px;
     }
 
     html, body {
@@ -46,7 +48,7 @@
     .logo {
       position: fixed;
       left: 50%;
-      top: 28px;
+      top: var(--logo-start-top);
       width: var(--logo-large);
       max-width: 82vw;
       transform: translateX(-50%) rotate(0deg);
@@ -127,15 +129,16 @@
 
     @media (max-width: 767px) {
       :root {
-        --header-height: 150px;
+        --header-height: 168px;
         --logo-large: 470px;
         --logo-small: 190px;
         --hero-gap: 68vh;
-        --text-form-gap: 10.5vh;
+        --text-form-gap: 7.5vh;
+        --logo-start-top: 24px;
+        --logo-top-buffer: 14px;
       }
 
       .logo {
-        top: 22px;
         max-width: 86vw;
       }
 
@@ -204,14 +207,18 @@
       const largeLogo = getVar('--logo-large');
       const smallLogo = getVar('--logo-small');
       const headerHeight = getVar('--header-height');
+      const startTop = getVar('--logo-start-top');
+      const topBuffer = getVar('--logo-top-buffer');
 
       const animationDistance = 320;
       const progress = Math.min(scrollY / animationDistance, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
       const currentWidth = largeLogo - ((largeLogo - smallLogo) * eased);
-      const startTop = window.innerWidth <= 767 ? 22 : 28;
-      const endTop = (headerHeight - smallLogo) / 2;
+
+      const centeredTop = (headerHeight - smallLogo) / 2;
+      const endTop = Math.max(topBuffer, centeredTop);
+
       const currentTop = startTop + ((endTop - startTop) * eased);
       const rotation = 360 * eased;
 
