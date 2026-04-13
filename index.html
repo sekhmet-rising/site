@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sekhmet Rising</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <style>
     * {
       box-sizing: border-box;
@@ -15,25 +16,26 @@
       width: 100%;
       overflow-x: hidden;
       background: #000;
+      color: #fff;
       font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      min-height: 260vh;
-      color: white;
+      min-height: 100vh;
     }
 
-    .header {
+    /* STICKY HERO */
+    .hero {
       position: sticky;
       top: 0;
-      width: 100%;
       height: 100vh;
+      z-index: 20;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 1000;
+      justify-content: center;
+      align-items: flex-start;
       pointer-events: none;
       overflow: hidden;
+      background: #000;
     }
 
     .logo-wrap {
@@ -47,14 +49,24 @@
       width: 520px;
       max-width: 80vw;
       transform-origin: center center;
-      transition: transform 0.25s ease-out, width 0.25s ease-out;
+      will-change: transform, width;
     }
 
-    .hero-text-wrap {
-      width: 100%;
+    /* SCROLL CONTENT */
+    .content {
+      position: relative;
+      z-index: 5;
+    }
+
+    .intro-spacer {
+      height: 92vh;
+    }
+
+    .text-section {
+      min-height: 90vh;
       display: flex;
       justify-content: center;
-      margin-top: 260px;
+      align-items: center;
       padding: 0 24px;
     }
 
@@ -65,12 +77,11 @@
       line-height: 1.7;
       font-weight: 300;
       letter-spacing: 0.03em;
-      color: #fff;
-
+      color: rgba(255,255,255,0.96);
       opacity: 0;
-      transform: translateY(40px);
-
+      transform: translateY(34px);
       transition: opacity 3s ease, transform 3s ease;
+      will-change: opacity, transform;
     }
 
     .fade-text.visible {
@@ -78,126 +89,179 @@
       transform: translateY(0);
     }
 
-    /* FORM SECTION */
     .form-section {
-      width: 100%;
+      min-height: 100vh;
       display: flex;
+      align-items: center;
       justify-content: center;
-      padding: 120px 20px;
+      padding: 40px 20px 120px;
     }
 
     .form-wrap {
       width: 100%;
-      max-width: 700px;
-
+      max-width: 720px;
       opacity: 0;
-      transform: translateY(60px);
-
-      transition: opacity 1.5s ease, transform 1.5s ease;
+      transform: translateY(48px);
+      transition: opacity 1.4s ease, transform 1.4s ease;
+      will-change: opacity, transform;
     }
 
     .form-wrap.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
+    iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+      background: transparent;
+    }
+
+    .bottom-spacer {
+      height: 20vh;
+    }
+
+    @media (max-width: 767px) {
+      .logo-wrap {
+        padding-top: 28px;
+      }
+
+      .logo {
+        width: 480px;
+        max-width: 88vw;
+      }
+
+      .intro-spacer {
+        height: 88vh;
+      }
+
+      .text-section {
+        min-height: 85vh;
+        padding: 0 20px;
+      }
+
+      .form-section {
+        padding: 20px 16px 100px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
+  <section class="hero">
     <div class="logo-wrap">
-      <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
+      <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
     </div>
+  </section>
 
-    <div class="hero-text-wrap">
+  <main class="content">
+    <div class="intro-spacer"></div>
+
+    <section class="text-section">
       <div class="fade-text" id="fadeText">
         Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- FORM SECTION -->
-  <div class="form-section">
-    <div class="form-wrap" id="formWrap">
+    <section class="form-section">
+      <div class="form-wrap" id="formWrap">
+        <iframe
+          data-tally-src="https://tally.so/embed/J9JgDd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          loading="lazy"
+          width="100%"
+          height="274"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Sekhmet">
+        </iframe>
+      </div>
+    </section>
 
-      <iframe
-        data-tally-src="https://tally.so/embed/J9JgDd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        loading="lazy"
-        width="100%"
-        height="274"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-        title="Sekhmet">
-      </iframe>
+    <div class="bottom-spacer"></div>
+  </main>
 
-    </div>
-  </div>
-
-  <!-- TALLY SCRIPT -->
-  <script>
-    var d=document,
-    w="https://tally.so/widgets/embed.js",
-    v=function(){
-      if(typeof Tally!=="undefined"){
-        Tally.loadEmbeds();
-      } else {
-        d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){
-          e.src=e.dataset.tallySrc;
-        });
-      }
-    };
-
-    if(typeof Tally!=="undefined") v();
-    else if(d.querySelector('script[src="'+w+'"]')==null){
-      var s=d.createElement("script");
-      s.src=w;
-      s.onload=v;
-      s.onerror=v;
-      d.body.appendChild(s);
-    }
-  </script>
-
-  <!-- ANIMATION SCRIPT -->
   <script>
     const logo = document.getElementById('logo');
     const fadeText = document.getElementById('fadeText');
     const formWrap = document.getElementById('formWrap');
 
-    let hasTriggeredFade = false;
+    let textTriggered = false;
+    let ticking = false;
 
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-
-      // LOGO
-      const shrinkLimit = 300;
+    function updateLogo() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const shrinkLimit = 320;
       const progress = Math.min(scrollY / shrinkLimit, 1);
+
+      const eased = 1 - Math.pow(1 - progress, 3);
 
       const startSize = 520;
       const endSize = 260;
-      const currentSize = startSize - ((startSize - endSize) * progress);
+      const currentSize = startSize - ((startSize - endSize) * eased);
 
-      const rotation = 360 * progress;
-      const moveUp = progress * 10;
+      const rotation = 360 * eased;
+      const moveUp = 12 * eased;
 
       logo.style.width = currentSize + 'px';
       logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
 
-      // TEXT TIMER FADE (once)
-      if (!hasTriggeredFade && scrollY > 10) {
-        hasTriggeredFade = true;
+      if (!textTriggered && scrollY > 12) {
+        textTriggered = true;
         fadeText.classList.add('visible');
       }
 
-      // FORM FADE ON SCROLL POSITION
-      const formTrigger = window.innerHeight * 0.85;
-      const formTop = formWrap.getBoundingClientRect().top;
+      ticking = false;
+    }
 
-      if (formTop < formTrigger) {
-        formWrap.classList.add('visible');
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateLogo);
+        ticking = true;
       }
+    }
+
+    const formObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          formWrap.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: "0px 0px -8% 0px"
     });
+
+    formObserver.observe(formWrap);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('load', updateLogo);
+    window.addEventListener('resize', updateLogo);
+
+    (function () {
+      var d = document,
+          w = "https://tally.so/widgets/embed.js",
+          v = function () {
+            if (typeof Tally !== "undefined") {
+              Tally.loadEmbeds();
+            } else {
+              d.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(function (e) {
+                e.src = e.dataset.tallySrc;
+              });
+            }
+          };
+
+      if (typeof Tally !== "undefined") {
+        v();
+      } else if (d.querySelector('script[src="' + w + '"]') == null) {
+        var s = d.createElement("script");
+        s.src = w;
+        s.onload = v;
+        s.onerror = v;
+        d.body.appendChild(s);
+      }
+    })();
   </script>
 
 </body>
