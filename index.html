@@ -24,40 +24,38 @@
       min-height: 100vh;
     }
 
-    /* STICKY LOGO LAYER */
-    .sticky-stage {
-      position: sticky;
+    .logo-shell {
+      position: fixed;
       top: 0;
-      height: 100vh;
-      margin-bottom: -100vh;
-      z-index: 20;
+      left: 0;
+      width: 100%;
+      height: 0;
+      z-index: 1000;
       pointer-events: none;
-      overflow: hidden;
     }
 
     .logo {
-      position: absolute;
-      top: 32px;
+      position: fixed;
       left: 50%;
+      top: 36px;
       width: 520px;
       max-width: 82vw;
-      transform: translateX(-50%) rotate(0deg);
+      transform: translateX(-50%) translateY(0) rotate(0deg);
       transform-origin: center center;
-      will-change: transform, width;
+      will-change: transform, width, top;
     }
 
-    /* PAGE CONTENT */
     .page {
       position: relative;
-      z-index: 5;
+      z-index: 1;
     }
 
-    .lead-space {
-      height: 38vh;
+    .hero-spacer {
+      height: 105vh;
     }
 
     .text-section {
-      min-height: 88vh;
+      min-height: 95vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,7 +69,7 @@
       line-height: 1.7;
       letter-spacing: 0.03em;
       font-weight: 300;
-      color: rgba(255, 255, 255, 0.96);
+      color: rgba(255,255,255,0.96);
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 3s ease, transform 3s ease;
@@ -113,7 +111,7 @@
     }
 
     .bottom-space {
-      height: 18vh;
+      height: 25vh;
     }
 
     @media (max-width: 767px) {
@@ -122,12 +120,12 @@
         max-width: 86vw;
       }
 
-      .lead-space {
-        height: 26vh;
+      .hero-spacer {
+        height: 100vh;
       }
 
       .text-section {
-        min-height: 82vh;
+        min-height: 90vh;
         padding: 0 20px;
       }
 
@@ -139,14 +137,12 @@
 </head>
 <body>
 
-  <!-- STICKY LOGO -->
-  <div class="sticky-stage">
+  <div class="logo-shell">
     <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
   </div>
 
-  <!-- PAGE CONTENT -->
   <main class="page">
-    <div class="lead-space"></div>
+    <div class="hero-spacer"></div>
 
     <section class="text-section">
       <div class="hero-text" id="heroText">
@@ -180,7 +176,7 @@
     let textStarted = false;
     let ticking = false;
 
-    function updateLogo() {
+    function updateScene() {
       const scrollY = window.scrollY || window.pageYOffset;
 
       const animationDistance = 320;
@@ -192,7 +188,7 @@
       const currentWidth = startWidth - ((startWidth - endWidth) * eased);
 
       const rotation = 360 * eased;
-      const lift = 10 * eased;
+      const lift = 12 * eased;
 
       logo.style.width = currentWidth + 'px';
       logo.style.transform = `translateX(-50%) translateY(-${lift}px) rotate(${rotation}deg)`;
@@ -207,7 +203,7 @@
 
     function onScroll() {
       if (!ticking) {
-        requestAnimationFrame(updateLogo);
+        requestAnimationFrame(updateScene);
         ticking = true;
       }
     }
@@ -226,8 +222,8 @@
     formObserver.observe(formWrap);
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateLogo);
-    window.addEventListener('load', updateLogo);
+    window.addEventListener('resize', updateScene);
+    window.addEventListener('load', updateScene);
 
     (function () {
       var d = document,
