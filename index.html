@@ -8,8 +8,8 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: black;
+      height: 200vh; /* gives scroll space so effect works */
     }
 
     /* 🔥 HEADER */
@@ -22,52 +22,33 @@
       justify-content: center;
       align-items: center;
       transition: all 0.4s ease;
-      padding: 40px 0;
+      padding: 60px 0;
       z-index: 1000;
     }
 
     header img {
-      height: 140px;
+      height: 180px;
       transition: all 0.4s ease;
     }
 
     /* 🔻 SHRINK STATE */
     header.shrink {
       padding: 10px 0;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
     }
 
     header.shrink img {
-      height: 60px;
+      height: 70px;
     }
-
-    /* 📸 IMAGE CONTENT */
-    .content {
-      margin-top: 220px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content img {
-      max-width: 100%;
-      height: auto;
-    }
-
   </style>
 </head>
 
 <body>
 
-  <!-- 🔥 LOGO HEADER -->
+  <!-- 🔥 LOGO HEADER ONLY -->
   <header id="header">
     <img src="SEkRise2.jpg" alt="Logo">
   </header>
-
-  <!-- 📸 MAIN IMAGE -->
-  <div class="content">
-    <img src="SEkRise2.jpg" alt="Main Image">
-  </div>
 
   <script>
     const header = document.getElementById("header");
