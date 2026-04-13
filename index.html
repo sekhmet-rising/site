@@ -19,7 +19,7 @@
     }
 
     body {
-      min-height: 220vh;
+      min-height: 260vh;
       color: white;
     }
 
@@ -47,7 +47,6 @@
       width: 520px;
       max-width: 80vw;
       transform-origin: center center;
-      will-change: transform, width;
       transition: transform 0.25s ease-out, width 0.25s ease-out;
     }
 
@@ -79,13 +78,33 @@
       transform: translateY(0);
     }
 
-    .spacer {
-      height: 140vh;
+    /* FORM SECTION */
+    .form-section {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 120px 20px;
+    }
+
+    .form-wrap {
+      width: 100%;
+      max-width: 700px;
+
+      opacity: 0;
+      transform: translateY(60px);
+
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    .form-wrap.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <div class="header">
     <div class="logo-wrap">
       <img src="SEkRise2.jpg" alt="Logo" class="logo" id="logo">
@@ -98,18 +117,60 @@
     </div>
   </div>
 
-  <div class="spacer"></div>
+  <!-- FORM SECTION -->
+  <div class="form-section">
+    <div class="form-wrap" id="formWrap">
 
+      <iframe
+        data-tally-src="https://tally.so/embed/J9JgDd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+        loading="lazy"
+        width="100%"
+        height="274"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Sekhmet">
+      </iframe>
+
+    </div>
+  </div>
+
+  <!-- TALLY SCRIPT -->
+  <script>
+    var d=document,
+    w="https://tally.so/widgets/embed.js",
+    v=function(){
+      if(typeof Tally!=="undefined"){
+        Tally.loadEmbeds();
+      } else {
+        d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){
+          e.src=e.dataset.tallySrc;
+        });
+      }
+    };
+
+    if(typeof Tally!=="undefined") v();
+    else if(d.querySelector('script[src="'+w+'"]')==null){
+      var s=d.createElement("script");
+      s.src=w;
+      s.onload=v;
+      s.onerror=v;
+      d.body.appendChild(s);
+    }
+  </script>
+
+  <!-- ANIMATION SCRIPT -->
   <script>
     const logo = document.getElementById('logo');
     const fadeText = document.getElementById('fadeText');
+    const formWrap = document.getElementById('formWrap');
 
     let hasTriggeredFade = false;
 
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
 
-      // Logo animation (same as before)
+      // LOGO
       const shrinkLimit = 300;
       const progress = Math.min(scrollY / shrinkLimit, 1);
 
@@ -123,10 +184,18 @@
       logo.style.width = currentSize + 'px';
       logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
 
-      // Trigger fade ONLY ON FIRST SCROLL
+      // TEXT TIMER FADE (once)
       if (!hasTriggeredFade && scrollY > 10) {
         hasTriggeredFade = true;
         fadeText.classList.add('visible');
+      }
+
+      // FORM FADE ON SCROLL POSITION
+      const formTrigger = window.innerHeight * 0.85;
+      const formTop = formWrap.getBoundingClientRect().top;
+
+      if (formTop < formTrigger) {
+        formWrap.classList.add('visible');
       }
     });
   </script>
