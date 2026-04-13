@@ -13,10 +13,11 @@
     }
 
     :root {
-      --header-height: 150px;
+      --header-height: 190px;
       --logo-large: 520px;
       --logo-small: 220px;
-      --section-gap: 22vh;
+      --hero-gap: 82vh;
+      --text-form-gap: 15vh;
     }
 
     html, body {
@@ -31,7 +32,6 @@
       min-height: 100vh;
     }
 
-    /* TOP BLACK HEADER BAR */
     .top-header {
       position: fixed;
       top: 0;
@@ -41,13 +41,12 @@
       background: #000;
       z-index: 1000;
       pointer-events: none;
-      overflow: hidden;
     }
 
     .logo {
       position: fixed;
       left: 50%;
-      top: 20px;
+      top: 28px;
       width: var(--logo-large);
       max-width: 82vw;
       transform: translateX(-50%) rotate(0deg);
@@ -63,27 +62,23 @@
     }
 
     .hero-spacer {
-      height: 82vh;
-    }
-
-    .text-section,
-    .form-section {
-      min-height: 78vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-left: 24px;
-      padding-right: 24px;
+      height: var(--hero-gap);
     }
 
     .text-section {
-      padding-top: 0;
-      padding-bottom: var(--section-gap);
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px var(--text-form-gap);
     }
 
     .form-section {
-      padding-top: 0;
-      padding-bottom: 14vh;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px 12vh;
     }
 
     .hero-text {
@@ -132,30 +127,29 @@
 
     @media (max-width: 767px) {
       :root {
-        --header-height: 118px;
+        --header-height: 150px;
         --logo-large: 470px;
         --logo-small: 190px;
-        --section-gap: 18vh;
+        --hero-gap: 68vh;
+        --text-form-gap: 10.5vh;
       }
 
       .logo {
-        top: 14px;
+        top: 22px;
         max-width: 86vw;
       }
 
-      .hero-spacer {
-        height: 68vh;
-      }
-
-      .text-section,
-      .form-section {
-        min-height: 72vh;
+      .text-section {
+        min-height: 68vh;
         padding-left: 20px;
         padding-right: 20px;
       }
 
       .form-section {
-        padding-bottom: 12vh;
+        min-height: 52vh;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10vh;
       }
     }
   </style>
@@ -216,7 +210,7 @@
       const eased = 1 - Math.pow(1 - progress, 3);
 
       const currentWidth = largeLogo - ((largeLogo - smallLogo) * eased);
-      const startTop = window.innerWidth <= 767 ? 14 : 20;
+      const startTop = window.innerWidth <= 767 ? 22 : 28;
       const endTop = (headerHeight - smallLogo) / 2;
       const currentTop = startTop + ((endTop - startTop) * eased);
       const rotation = 360 * eased;
