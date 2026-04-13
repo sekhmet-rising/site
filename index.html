@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sekhmet Rising</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sekhmet Rising</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -24,67 +24,61 @@
       min-height: 100vh;
     }
 
-    /* STICKY HERO */
-    .hero {
+    /* STICKY LOGO LAYER */
+    .sticky-stage {
       position: sticky;
       top: 0;
       height: 100vh;
+      margin-bottom: -100vh;
       z-index: 20;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
       pointer-events: none;
       overflow: hidden;
-      background: #000;
-    }
-
-    .logo-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      padding-top: 40px;
     }
 
     .logo {
+      position: absolute;
+      top: 32px;
+      left: 50%;
       width: 520px;
-      max-width: 80vw;
+      max-width: 82vw;
+      transform: translateX(-50%) rotate(0deg);
       transform-origin: center center;
       will-change: transform, width;
     }
 
-    /* SCROLL CONTENT */
-    .content {
+    /* PAGE CONTENT */
+    .page {
       position: relative;
       z-index: 5;
     }
 
-    .intro-spacer {
-      height: 92vh;
+    .lead-space {
+      height: 38vh;
     }
 
     .text-section {
-      min-height: 90vh;
+      min-height: 88vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 0 24px;
     }
 
-    .fade-text {
+    .hero-text {
       max-width: 900px;
       text-align: center;
-      font-size: clamp(1.2rem, 2.1vw, 2.1rem);
+      font-size: clamp(1.2rem, 2.2vw, 2.2rem);
       line-height: 1.7;
-      font-weight: 300;
       letter-spacing: 0.03em;
-      color: rgba(255,255,255,0.96);
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.96);
       opacity: 0;
-      transform: translateY(34px);
+      transform: translateY(30px);
       transition: opacity 3s ease, transform 3s ease;
       will-change: opacity, transform;
     }
 
-    .fade-text.visible {
+    .hero-text.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -101,7 +95,7 @@
       width: 100%;
       max-width: 720px;
       opacity: 0;
-      transform: translateY(48px);
+      transform: translateY(50px);
       transition: opacity 1.4s ease, transform 1.4s ease;
       will-change: opacity, transform;
     }
@@ -118,26 +112,22 @@
       background: transparent;
     }
 
-    .bottom-spacer {
-      height: 20vh;
+    .bottom-space {
+      height: 18vh;
     }
 
     @media (max-width: 767px) {
-      .logo-wrap {
-        padding-top: 28px;
-      }
-
       .logo {
-        width: 480px;
-        max-width: 88vw;
+        top: 24px;
+        max-width: 86vw;
       }
 
-      .intro-spacer {
-        height: 88vh;
+      .lead-space {
+        height: 26vh;
       }
 
       .text-section {
-        min-height: 85vh;
+        min-height: 82vh;
         padding: 0 20px;
       }
 
@@ -149,17 +139,17 @@
 </head>
 <body>
 
-  <section class="hero">
-    <div class="logo-wrap">
-      <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
-    </div>
-  </section>
+  <!-- STICKY LOGO -->
+  <div class="sticky-stage">
+    <img src="SEkRise2.jpg" alt="Sekhmet Rising logo" class="logo" id="logo">
+  </div>
 
-  <main class="content">
-    <div class="intro-spacer"></div>
+  <!-- PAGE CONTENT -->
+  <main class="page">
+    <div class="lead-space"></div>
 
     <section class="text-section">
-      <div class="fade-text" id="fadeText">
+      <div class="hero-text" id="heroText">
         Blorp the greasy word-salad tripped over its own nonsense, yelling “butter the chaos, you soggy donut,” while confused pigeons committed minor crimes in the background. Meanwhile, the sentence kept duct-taping itself together—half logic, half bad decisions—until it smelled like burnt toast and regret.
       </div>
     </section>
@@ -179,37 +169,37 @@
       </div>
     </section>
 
-    <div class="bottom-spacer"></div>
+    <div class="bottom-space"></div>
   </main>
 
   <script>
     const logo = document.getElementById('logo');
-    const fadeText = document.getElementById('fadeText');
+    const heroText = document.getElementById('heroText');
     const formWrap = document.getElementById('formWrap');
 
-    let textTriggered = false;
+    let textStarted = false;
     let ticking = false;
 
     function updateLogo() {
       const scrollY = window.scrollY || window.pageYOffset;
-      const shrinkLimit = 320;
-      const progress = Math.min(scrollY / shrinkLimit, 1);
 
+      const animationDistance = 320;
+      const progress = Math.min(scrollY / animationDistance, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      const startSize = 520;
-      const endSize = 260;
-      const currentSize = startSize - ((startSize - endSize) * eased);
+      const startWidth = Math.min(window.innerWidth * 0.82, 520);
+      const endWidth = Math.min(window.innerWidth * 0.42, 260);
+      const currentWidth = startWidth - ((startWidth - endWidth) * eased);
 
       const rotation = 360 * eased;
-      const moveUp = 12 * eased;
+      const lift = 10 * eased;
 
-      logo.style.width = currentSize + 'px';
-      logo.style.transform = `translateY(-${moveUp}px) rotate(${rotation}deg)`;
+      logo.style.width = currentWidth + 'px';
+      logo.style.transform = `translateX(-50%) translateY(-${lift}px) rotate(${rotation}deg)`;
 
-      if (!textTriggered && scrollY > 12) {
-        textTriggered = true;
-        fadeText.classList.add('visible');
+      if (!textStarted && scrollY > 8) {
+        textStarted = true;
+        heroText.classList.add('visible');
       }
 
       ticking = false;
@@ -217,7 +207,7 @@
 
     function onScroll() {
       if (!ticking) {
-        window.requestAnimationFrame(updateLogo);
+        requestAnimationFrame(updateLogo);
         ticking = true;
       }
     }
@@ -236,8 +226,8 @@
     formObserver.observe(formWrap);
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('load', updateLogo);
     window.addEventListener('resize', updateLogo);
+    window.addEventListener('load', updateLogo);
 
     (function () {
       var d = document,
