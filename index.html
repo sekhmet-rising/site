@@ -2,31 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Image Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sekhmet Rising</title>
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      width: 100%;
-      height: 100%;
-    }
-
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
     }
 
-    img {
-      max-width: 100%;
-      max-height: 100vh;
-      display: block;
+    /* 🔥 HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s ease;
+      padding: 40px 0;
+      z-index: 1000;
     }
+
+    header img {
+      height: 140px;
+      transition: all 0.4s ease;
+    }
+
+    /* 🔻 SHRINK STATE */
+    header.shrink {
+      padding: 10px 0;
+      background: rgba(0,0,0,0.9);
+    }
+
+    header.shrink img {
+      height: 60px;
+    }
+
+    /* 📸 IMAGE CONTENT */
+    .content {
+      margin-top: 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+    }
+
   </style>
 </head>
+
 <body>
-  <img src="SEkRise2.jpg" alt="Image" />
+
+  <!-- 🔥 LOGO HEADER -->
+  <header id="header">
+    <img src="SEkRise2.jpg" alt="Logo">
+  </header>
+
+  <!-- 📸 MAIN IMAGE -->
+  <div class="content">
+    <img src="SEkRise2.jpg" alt="Main Image">
+  </div>
+
+  <script>
+    const header = document.getElementById("header");
+
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  </script>
+
 </body>
 </html>
